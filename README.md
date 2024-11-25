@@ -33,6 +33,15 @@ Just a collection of things I got working.
     - Used LONG(x) function
     - Created segment just for stack pointer
 
+5. Can connect to microcontroller through OpenOCD and gdb-multiarch
+    - Install OpenOCD and gdb-multiarch
+    - Put OpenOCD command in a file (openocd.sh) to automate running it
+    - Put GDB commands in a file (gdb_start) to automate command execution
+    - Run `./openocd.sh` to activate OpenOCD
+    - Run `gdb-multiarch -x gdb_start` to connect to OpenOCD's gdb server then
+      run the commands
+
+
 # Useful things to remember
 
 rustflags: flags passed to rustc that are defined in a .cargo/config.toml
@@ -46,6 +55,8 @@ Flags are passed to the linker indirectly by gcc with -Wl,
 Specify a linker script with -T
 
 Use `ar rcs [output file name] [input file name]` to archive an object file
+
+Install gdb-multiarch to use gdb on different platforms.
 
 # Problems
 build.rs specifies to recompile startup.c when it changes. However, startup.c 

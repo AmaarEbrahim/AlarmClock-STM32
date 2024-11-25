@@ -46,6 +46,11 @@ pub static vtable: [Vector; 15] = [
 
 #[no_mangle]
 fn main() -> () {
+
+    // blink an LED. Try doing it in C first.
+    // https://blog.embeddedexpert.io/?p=837
+    // Submodule CMSIS-core for stm32l0 devices: https://github.com/STMicroelectronics/cmsis-device-l0/tree/master
+
     loop {
     }
 }
