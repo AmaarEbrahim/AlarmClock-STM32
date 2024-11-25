@@ -36,11 +36,15 @@ Just a collection of things I got working.
 # Useful things to remember
 
 rustflags: flags passed to rustc that are defined in a .cargo/config.toml
+
 rust-lld: the linker used by rust. It is a wrapper for lld.
+
 link-args: flags passed to the linker. These are defined in rustflags
 
 Flags are passed to the linker indirectly by gcc with -Wl,
+
 Specify a linker script with -T
+
 Use `ar rcs [output file name] [input file name]` to archive an object file
 
 # Problems
