@@ -7,7 +7,8 @@ rustflags = [
   # tell Rust our Cortex-M55 doesn't have Floating-Point M-Profile Vector
   # Extensions (but it does have everything else a Cortex-M55 could have).
   #"-Ctarget-feature=-mve.fp"
-  "--emit=obj"
+  "--emit=asm"
+
 
 ]
 

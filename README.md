@@ -41,6 +41,31 @@ Just a collection of things I got working.
     - Run `gdb-multiarch -x gdb_start` to connect to OpenOCD's gdb server then
       run the commands
 
+6. Blinked an LED in C
+    - build.rs builds the C code with "-mthumb" and "-mcpu=cortexm0plus" flags
+        this ensures that the compiler translates code into assembly instructions
+        supported by the cortex-m0+? before adding these flags, the processor 
+        encountered a hardfault when this line of code was executed:
+
+        ```asm
+            8000154:	f7ff ff7c 	blx	8000050 <startup>
+        ```
+        blx is "branch and link with exchange". It exchanges the instruction set
+        from Thumb to ARM. Since the cortex-m0+ doesn't only supports Thumb, running
+        this line of code causes a hard fault.
+
+        With the above flags added, bl is used instead of blx.
+
+    - Created functions based on code found online (https://blog.embeddedexpert.io/?p=837) to blink an LED in C
+    - Removed "-fPIC" flag from build.rs because it was preventing linker symbols
+    from having the right values in the executable. When fPIC was there, the processor
+    would encounter a hardfault because there were invalid memory accesses.
+    - learned some GDB commands to help debug: step, stepi n, finish, continue
+    - submoduled the STM32CubeL0 MCU Firmware Package (https://github.com/STMicroelectronics/STM32CubeL0/tree/master)
+        It provides CMSIS-Core, CMSIS-Device, and a bunch of other libraries
+        Also, I had to change build.rs to search for header files in the Core and Device subdirectories so I could use stm32l073xx.h header file for its definitions.
+
+
 
 # Useful things to remember
 
@@ -63,6 +88,8 @@ build.rs specifies to recompile startup.c when it changes. However, startup.c
 seems to only get compiled when its corresponding archive and object files have 
 been deleted. If startup.c is changed, but the old object and archive files aren't
 deleted, startup.c won't get compiled. 
+
+Build times are really long even though the project is small. Maybe it is because of the submodule I added. Does rustc search through all directories in the project to find rust files?
 
 # Resources:
 

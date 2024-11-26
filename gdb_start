@@ -1,5 +1,12 @@
-target remote localhost:3333
+target extended-remote localhost:3333
 
 monitor flash write_image erase ./target/thumbv6m-none-eabi/debug/alarm-clock-rs
 
+
+file ./target/thumbv6m-none-eabi/debug/alarm-clock-rs
+
 monitor reset halt
+
+layout asm
+
+

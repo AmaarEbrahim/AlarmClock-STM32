@@ -8,18 +8,33 @@ extern "C" {
     fn startup();
 }
 
+extern "C" {
+    fn configure_led();
+    fn wait();
+    fn turn_led_on();
+    fn turn_led_off();
+}
+
 union Vector {
     integer: u32,
     vector: fn() -> ()
 }
 
+fn stuff() -> u32 {
+    return 3;
+}
+
+#[no_mangle]
 fn ResetVector() {
     unsafe {
         startup();
         main();
         }
+
+    
 }
 
+#[no_mangle]
 fn Hang() {
     loop {}
 }
@@ -49,13 +64,27 @@ fn main() -> () {
 
     // blink an LED. Try doing it in C first.
     // https://blog.embeddedexpert.io/?p=837
-    // Submodule CMSIS-core for stm32l0 devices: https://github.com/STMicroelectronics/cmsis-device-l0/tree/master
+    // Submodule CMSIS-device for stm32l0 devices: https://github.com/STMicroelectronics/cmsis-device-l0/tree/master
+    // https://github.com/STMicroelectronics/STM32CubeL0
+
+    let h: u32 = stuff();
+
+    unsafe {
+
+    configure_led();
 
     loop {
+        turn_led_on();
+        wait();
+        turn_led_off();
+        wait();
     }
+
+}
 }
 
 #[panic_handler]
+#[no_mangle]
 fn panic(_a: &PanicInfo) -> ! {
     loop {}
 }
